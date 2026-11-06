@@ -1,5 +1,5 @@
 window.PROFILE = {
-  name: "Y. R. Kirbi Simbolon",
+  name: "Kirbi Simbolon",
   shortName: "Kirbi Simbolon",
   initials: "KS",
   title: "PHP Developer",

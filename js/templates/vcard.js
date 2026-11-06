@@ -141,7 +141,7 @@ window.PORTFOLIO_TEMPLATES.push({
           panel("portfolio", "Portfolio", "<section class=\"projects\"><ul class=\"project-list\">" + projects + "</ul></section>") +
           panel("contact", "Contact",
             "<section class=\"contact-panel\"><p class=\"about-text\">Email is the direct way to reach me. The button opens your mail app.</p>" +
-            "<a class=\"form-btn\" href=\"mailto:" + esc(profile.email) + "\">" + icons.mail + "<span>Email " + esc(profile.shortName.split(" ")[0]) + "</span></a>" +
+            "<a class=\"form-btn\" href=\"mailto:" + esc(profile.email) + "\">" + icons.mail + "<span>Email " + esc(profile.name) + "</span></a>" +
             "<ul class=\"contacts-list contact-panel-list\">" +
               contactRow(icons.mail, "Email", emailLink(profile.email)) +
               contactRow(icons.pin, "Location", "<address>" + esc(profile.location) + "</address>") +
