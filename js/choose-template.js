@@ -3,6 +3,7 @@
   if (typeof module === "object" && module.exports) module.exports = api;
   root.chooseTemplate = api.chooseTemplate;
   root.switcherVisible = api.switcherVisible;
+  root.resolveTemplate = api.resolveTemplate;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   function chooseTemplate(ids, query, stored, fallback) {
     var list = ids || [];
@@ -19,5 +20,11 @@
     return false;
   }
 
-  return { chooseTemplate: chooseTemplate, switcherVisible: switcherVisible };
+  function resolveTemplate(ids, shortcut, query, stored, fallback) {
+    var list = ids || [];
+    if (shortcut && list.indexOf(shortcut) !== -1) return shortcut;
+    return chooseTemplate(list, query, stored, fallback);
+  }
+
+  return { chooseTemplate: chooseTemplate, switcherVisible: switcherVisible, resolveTemplate: resolveTemplate };
 });

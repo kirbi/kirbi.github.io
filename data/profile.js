@@ -4,8 +4,8 @@
     shortName: "Kirbi Simbolon",
     initials: "KS",
     email: "kirbi.simbolon@gmail.com",
-    photo: "img/personal.jpg",
-    cv: "assets/Kirbi-Simbolon-CV.pdf",
+    photo: "/img/personal.jpg",
+    cv: "/assets/Kirbi-Simbolon-CV.pdf",
     links: [
       { label: "GitHub", href: "https://github.com/kirbi" },
       { label: "LinkedIn", href: "https://linkedin.com/in/kirbi-simbolon" }
@@ -176,6 +176,8 @@
       ui: {
         skip: "Skip to content",
         template: "Template",
+        switchToVcard: "Switch to vCard",
+        switchToModern: "Switch to Modern",
         language: "Language",
         menu: "Menu",
         close: "Close",
@@ -362,6 +364,8 @@
       ui: {
         skip: "Lewati ke isi",
         template: "Templat",
+        switchToVcard: "Beralih ke vCard",
+        switchToModern: "Beralih ke Modern",
         language: "Bahasa",
         menu: "Menu",
         close: "Tutup",

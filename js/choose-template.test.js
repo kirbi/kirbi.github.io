@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { chooseTemplate, switcherVisible } = require("./choose-template.js");
+const { chooseTemplate, switcherVisible, resolveTemplate } = require("./choose-template.js");
 
 const ids = ["modern", "vcard"];
 
@@ -19,5 +19,10 @@ assert.strictEqual(switcherVisible(ids, "", "vcard"), true);
 assert.strictEqual(switcherVisible(ids, null, null), false);
 assert.strictEqual(switcherVisible(ids, "nope", null), false);
 assert.strictEqual(switcherVisible(ids, "nope", "nope"), false);
+
+assert.strictEqual(resolveTemplate(ids, "vcard", "modern", "modern", "modern"), "vcard");
+assert.strictEqual(resolveTemplate(ids, "missing", "vcard", null, "modern"), "vcard");
+assert.strictEqual(resolveTemplate(ids, "", null, null, "modern"), "modern");
+assert.strictEqual(resolveTemplate(ids, null, null, "vcard", "modern"), "vcard");
 
 console.log("choose-template ok");

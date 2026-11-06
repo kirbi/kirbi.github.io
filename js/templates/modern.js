@@ -75,6 +75,7 @@ window.PORTFOLIO_TEMPLATES.push({
           "<a class=\"brand\" href=\"#top\"><span class=\"brand-mark\" aria-hidden=\"true\">" + esc(profile.initials) + "</span>" +
           "<span class=\"brand-name\">" + esc(profile.shortName) + "</span></a>" +
           "<div class=\"header-end\">" +
+            "<button class=\"theme-switch\" type=\"button\" data-theme-switch=\"vcard\">" + esc(ui.switchToVcard) + "</button>" +
             "<div class=\"lang-toggle\" role=\"group\" aria-label=\"" + esc(ui.language) + "\">" +
               "<button type=\"button\" data-lang=\"en\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "false" : "true") + "\">EN</button>" +
               "<button type=\"button\" data-lang=\"id\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "true" : "false") + "\">ID</button>" +

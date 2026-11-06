@@ -13,7 +13,7 @@ The page has two layouts:
 - `modern` — the editorial page
 - `vcard` — a dark sidebar layout adapted from [vCard Personal Portfolio](https://github.com/codewithsadee/vcard-personal-portfolio) by codewithsadee (MIT). The license notice is in `licenses/vcard-personal-portfolio-MIT.txt`.
 
-The Template control is hidden on a normal visit. It appears when the URL has a valid `?template=modern` or `?template=vcard`, and it stays available after that choice is stored in `localStorage` under `portfolio-template`. The default for a first visit is the one line in `data/config.js`:
+Each layout has a theme button in the header (Modern) or sidebar (vCard). One click opens the other layout, keeps the current `lang` query, and stores the choice in `localStorage` under `portfolio-template`. The default for a first visit to the site root is the one line in `data/config.js`:
 
 ```js
 defaultTemplate: "modern",
@@ -40,21 +40,31 @@ window.PORTFOLIO_TEMPLATES.push({
 
 ```js
 stylesheets: {
-  modern: "css/site.css",
-  vcard: "css/vcard.css",
-  "your-id": "css/your-id.css"
+  modern: "/css/site.css",
+  vcard: "/css/vcard.css",
+  "your-id": "/css/your-id.css"
 }
 ```
 
 3. Add `<script src="js/templates/your-id.js"></script>` in `index.html` before `js/app.js`.
 
-The Template menu lists every registered template. Keep new copy in `data/profile.js` instead of inside the renderer.
+Keep new copy in `data/profile.js` instead of inside the renderer. The theme button switches between the Modern and vCard pages.
+
+## Shortcut URLs
+
+These addresses render that template directly. Styles, scripts, the photo, and the CV use site-root paths, so they load from either folder. `?lang=id` and `?lang=en` still work.
+
+- https://kirbi.github.io/modern/
+- https://kirbi.github.io/vcard/
+- https://kirbi.github.io/vcard/?lang=id
+
+A shortcut wins over `?template=` and over the stored template. It does not write `portfolio-template` by itself. The site root, https://kirbi.github.io/, still follows `?template=`, then the stored choice, then `defaultTemplate`.
 
 ## Language
 
 The page opens in English. `?lang=id` or `?lang=en` selects a language, and a valid choice is stored under `portfolio-lang`. The EN / ID control in each template does the same. UI labels and the profile copy both come from `data/profile.js`.
 
-The downloadable CV is `assets/Kirbi-Simbolon-CV.pdf` (email, GitHub, and LinkedIn only).
+The downloadable CV is `/assets/Kirbi-Simbolon-CV.pdf` (email, GitHub, and LinkedIn only).
 
 ## Preview
 

@@ -23,17 +23,9 @@
   var templates = window.PORTFOLIO_TEMPLATES || [];
   var ids = templates.map(function (template) { return template.id; });
   var cfg = window.PORTFOLIO || {};
-  var select = document.getElementById("template-select");
   var mount = document.getElementById("app");
   var params = new URLSearchParams(location.search);
   var currentId = "modern";
-
-  templates.forEach(function (template) {
-    var option = document.createElement("option");
-    option.value = template.id;
-    option.textContent = template.label;
-    select.appendChild(option);
-  });
 
   function pageFor(templateId) {
     if (templateId !== "vcard") return "about";
@@ -59,8 +51,6 @@
     if (desc && window.PROFILE.description) desc.setAttribute("content", window.PROFILE.description);
     var skip = document.querySelector(".skip");
     if (skip && window.PROFILE.ui) skip.textContent = window.PROFILE.ui.skip;
-    var label = document.querySelector("label[for='template-select']");
-    if (label && window.PROFILE.ui) label.textContent = window.PROFILE.ui.template;
     document.title = window.PROFILE.name + " · " + window.PROFILE.title;
   }
 
@@ -80,7 +70,6 @@
     if (link && href) link.setAttribute("href", href);
     var theme = document.querySelector("meta[name='theme-color']");
     if (theme && template.themeColor) theme.setAttribute("content", template.themeColor);
-    if (select.value !== id) select.value = id;
     document.title = window.PROFILE.name + " · " + window.PROFILE.title;
 
     if (options.persist) writeStorage(TEMPLATE_KEY, id);
@@ -88,9 +77,6 @@
       var url = new URL(location.href);
       url.searchParams.set("template", id);
       history.replaceState(null, "", url);
-    }
-    if (window.switcherVisible(ids, new URLSearchParams(location.search).get("template"), readStorage(TEMPLATE_KEY))) {
-      document.documentElement.setAttribute("data-switcher", "");
     }
 
     mount.replaceChildren();
@@ -105,15 +91,25 @@
     }
   }
 
-  document.addEventListener("click", function (event) {
-    var button = event.target.closest("[data-lang]");
-    if (!button || button.getAttribute("aria-pressed") === "true") return;
-    applyLang(button.getAttribute("data-lang"), { persist: true, updateUrl: true });
-    activate(currentId, {});
-  });
+  function themeUrl(id) {
+    var lang = new URLSearchParams(location.search).get("lang");
+    var suffix = lang === "en" || lang === "id" ? "?lang=" + encodeURIComponent(lang) : "";
+    return "/" + id + "/" + suffix + location.hash;
+  }
 
-  select.addEventListener("change", function () {
-    activate(select.value, { persist: true, updateUrl: true });
+  document.addEventListener("click", function (event) {
+    var langButton = event.target.closest("[data-lang]");
+    if (langButton && langButton.getAttribute("aria-pressed") !== "true") {
+      applyLang(langButton.getAttribute("data-lang"), { persist: true, updateUrl: true });
+      activate(currentId, {});
+      return;
+    }
+    var themeButton = event.target.closest("[data-theme-switch]");
+    if (!themeButton) return;
+    var next = themeButton.getAttribute("data-theme-switch");
+    if (ids.indexOf(next) === -1 || next === currentId) return;
+    writeStorage(TEMPLATE_KEY, next);
+    location.assign(themeUrl(next));
   });
 
   var langQuery = params.get("lang");
@@ -121,7 +117,9 @@
     persist: !!(langQuery && LANGS.indexOf(langQuery) !== -1)
   });
 
+  var shortcut = document.documentElement.getAttribute("data-shortcut");
   var templateQuery = params.get("template");
-  var id = window.chooseTemplate(ids, templateQuery, readStorage(TEMPLATE_KEY), cfg.defaultTemplate);
-  activate(id, { persist: !!(templateQuery && ids.indexOf(templateQuery) !== -1) });
+  var shortcutWins = !!(shortcut && ids.indexOf(shortcut) !== -1);
+  var id = window.resolveTemplate(ids, shortcut, templateQuery, readStorage(TEMPLATE_KEY), cfg.defaultTemplate);
+  activate(id, { persist: !shortcutWins && !!(templateQuery && ids.indexOf(templateQuery) !== -1) });
 })();
