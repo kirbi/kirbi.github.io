@@ -84,7 +84,6 @@ window.PORTFOLIO_TEMPLATES.push({
           "<p class=\"lede\">" + esc(profile.lede) + "</p>" +
           "<ul class=\"hero-links\"><li><a href=\"mailto:" + esc(profile.email) + "\">" + esc(profile.email) + "</a></li>" + links + "</ul>" +
           "<dl class=\"meta\"><div><dt>Based</dt><dd>" + esc(profile.location) + "</dd></div>" +
-          "<div><dt>Phone</dt><dd><a href=\"" + esc(profile.phoneHref) + "\">" + esc(profile.phone) + "</a></dd></div>" +
           "<div><dt>Now</dt><dd>" + esc(profile.experience[0].company) + "</dd></div></dl></div>" +
           "<figure class=\"hero-photo\"><img src=\"" + esc(profile.photo) + "\" width=\"661\" height=\"699\" alt=\"" + esc(profile.photoAlt) + "\"></figure>" +
         "</section>" +
@@ -110,7 +109,7 @@ window.PORTFOLIO_TEMPLATES.push({
         "<section class=\"contact\" id=\"contact\" aria-labelledby=\"contact-title\"><div class=\"wrap\">" +
           "<div class=\"section-head\"><p class=\"index\">06</p><h2 id=\"contact-title\">Contact</h2></div>" +
           "<div class=\"contact-grid\"><div><p class=\"contact-mail\"><a href=\"mailto:" + esc(profile.email) + "\">" + esc(profile.email) + "</a></p>" +
-          "<ul class=\"contact-list\"><li><a href=\"" + esc(profile.phoneHref) + "\">" + esc(profile.phone) + "</a></li>" +
+          "<ul class=\"contact-list\">" +
           profile.links.map(function (link) {
             return "<li><a href=\"" + esc(link.href) + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + esc(link.href.replace(/^https:\/\//, "")) + "</a></li>";
           }).join("") +

@@ -14,7 +14,6 @@ window.PORTFOLIO_TEMPLATES.push({
 
     var icons = {
       mail: icon("<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"></rect><path d=\"m4 7 8 6 8-6\"></path>"),
-      phone: icon("<rect x=\"7\" y=\"2\" width=\"10\" height=\"20\" rx=\"2\"></rect><path d=\"M11 18h2\"></path>"),
       pin: icon("<path d=\"M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z\"></path><circle cx=\"12\" cy=\"10\" r=\"2.2\"></circle>"),
       chevron: icon("<path d=\"m6 9 6 6 6-6\"></path>"),
       book: icon("<path d=\"M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z\"></path><path d=\"M4 5.5A2.5 2.5 0 0 1 6.5 3\"></path>"),
@@ -122,7 +121,6 @@ window.PORTFOLIO_TEMPLATES.push({
             "<div class=\"separator\"></div>" +
             "<ul class=\"contacts-list\">" +
               contactRow(icons.mail, "Email", emailLink(profile.email)) +
-              contactRow(icons.phone, "Phone", "<a class=\"contact-link\" href=\"" + esc(profile.phoneHref) + "\">" + esc(profile.phone) + "</a>") +
               contactRow(icons.pin, "Location", "<address>" + esc(profile.location) + "</address>") +
             "</ul>" +
             "<div class=\"separator\"></div>" +
@@ -146,7 +144,6 @@ window.PORTFOLIO_TEMPLATES.push({
             "<a class=\"form-btn\" href=\"mailto:" + esc(profile.email) + "\">" + icons.mail + "<span>Email " + esc(profile.shortName.split(" ")[0]) + "</span></a>" +
             "<ul class=\"contacts-list contact-panel-list\">" +
               contactRow(icons.mail, "Email", emailLink(profile.email)) +
-              contactRow(icons.phone, "Phone", "<a class=\"contact-link\" href=\"" + esc(profile.phoneHref) + "\">" + esc(profile.phone) + "</a>") +
               contactRow(icons.pin, "Location", "<address>" + esc(profile.location) + "</address>") +
             "</ul></section>") +
           "<p class=\"layout-credit\">vCard layout adapted from <a href=\"https://github.com/codewithsadee/vcard-personal-portfolio\" target=\"_blank\" rel=\"noopener noreferrer\">vCard Personal Portfolio</a> by codewithsadee, MIT License.</p>" +
