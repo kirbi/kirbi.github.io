@@ -55,6 +55,7 @@
       url.searchParams.set("lang", lang);
       history.replaceState(null, "", url);
     }
+    paintShortcuts();
     var desc = document.querySelector("meta[name='description']");
     if (desc && window.PROFILE.description) desc.setAttribute("content", window.PROFILE.description);
     var skip = document.querySelector(".skip");
@@ -105,6 +106,20 @@
     }
   }
 
+  function paintShortcuts() {
+    var lang = new URLSearchParams(location.search).get("lang");
+    var suffix = lang === "en" || lang === "id" ? "?lang=" + encodeURIComponent(lang) : "";
+    var path = location.pathname.replace(/\/index\.html$/, "");
+    if (path.charAt(path.length - 1) !== "/") path += "/";
+    ids.forEach(function (id) {
+      var link = document.getElementById("shortcut-" + id);
+      if (!link) return;
+      link.setAttribute("href", "/" + id + "/" + suffix);
+      if (path === "/" + id + "/") link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  }
+
   document.addEventListener("click", function (event) {
     var button = event.target.closest("[data-lang]");
     if (!button || button.getAttribute("aria-pressed") === "true") return;
@@ -113,6 +128,13 @@
   });
 
   select.addEventListener("change", function () {
+    var shortcut = document.documentElement.getAttribute("data-shortcut");
+    if (shortcut && ids.indexOf(shortcut) !== -1) {
+      writeStorage(TEMPLATE_KEY, select.value);
+      var lang = new URLSearchParams(location.search).get("lang");
+      location.assign("/" + select.value + "/" + (lang === "en" || lang === "id" ? "?lang=" + encodeURIComponent(lang) : ""));
+      return;
+    }
     activate(select.value, { persist: true, updateUrl: true });
   });
 
@@ -121,7 +143,9 @@
     persist: !!(langQuery && LANGS.indexOf(langQuery) !== -1)
   });
 
+  var shortcut = document.documentElement.getAttribute("data-shortcut");
   var templateQuery = params.get("template");
-  var id = window.chooseTemplate(ids, templateQuery, readStorage(TEMPLATE_KEY), cfg.defaultTemplate);
-  activate(id, { persist: !!(templateQuery && ids.indexOf(templateQuery) !== -1) });
+  var shortcutWins = !!(shortcut && ids.indexOf(shortcut) !== -1);
+  var id = window.resolveTemplate(ids, shortcut, templateQuery, readStorage(TEMPLATE_KEY), cfg.defaultTemplate);
+  activate(id, { persist: !shortcutWins && !!(templateQuery && ids.indexOf(templateQuery) !== -1) });
 })();

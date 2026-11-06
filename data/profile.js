@@ -4,8 +4,8 @@
     shortName: "Kirbi Simbolon",
     initials: "KS",
     email: "kirbi.simbolon@gmail.com",
-    photo: "img/personal.jpg",
-    cv: "assets/Kirbi-Simbolon-CV.pdf",
+    photo: "/img/personal.jpg",
+    cv: "/assets/Kirbi-Simbolon-CV.pdf",
     links: [
       { label: "GitHub", href: "https://github.com/kirbi" },
       { label: "LinkedIn", href: "https://linkedin.com/in/kirbi-simbolon" }
