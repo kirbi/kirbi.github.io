@@ -5,8 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kirbi Simbolon · PHP Developer</title>
     <meta name="description" content="Portfolio of Kirbi Simbolon, a PHP Developer. Laravel, Livewire, Yii2, and Vue.js work across product, inventory, orders, and payments.">
+    <link rel="canonical" href="https://kirbi.github.io/">
+    <meta property="og:title" content="Kirbi Simbolon · PHP Developer">
+    <meta property="og:description" content="Portfolio of Kirbi Simbolon, a PHP Developer. Laravel, Livewire, Yii2, and Vue.js work across product, inventory, orders, and payments.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kirbi.github.io/">
+    <meta property="og:image" content="https://kirbi.github.io/assets/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="id_ID">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kirbi Simbolon · PHP Developer">
+    <meta name="twitter:description" content="Portfolio of Kirbi Simbolon, a PHP Developer. Laravel, Livewire, Yii2, and Vue.js work across product, inventory, orders, and payments.">
+    <meta name="twitter:image" content="https://kirbi.github.io/assets/og.png">
     <meta name="theme-color" content="#f3efe6">
-    <link rel="icon" href="img/favicon.png" type="image/png">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,520;0,9..144,640;1,9..144,520&family=Outfit:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -23,6 +39,10 @@
         try { stored = localStorage.getItem("portfolio-template"); } catch (error) {}
         var id = window.chooseTemplate(ids, query, stored, cfg.defaultTemplate);
         document.documentElement.dataset.template = id || "modern";
+        if (window.switcherVisible(ids, query, stored)) document.documentElement.setAttribute("data-switcher", "");
+        var langStored = null;
+        try { langStored = localStorage.getItem("portfolio-lang"); } catch (error) {}
+        document.documentElement.lang = window.chooseTemplate(["en", "id"], new URLSearchParams(location.search).get("lang"), langStored, "en");
         var link = document.getElementById("template-css");
         if (id && cfg.stylesheets && cfg.stylesheets[id]) link.href = cfg.stylesheets[id];
       })();

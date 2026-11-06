@@ -19,7 +19,7 @@
   z-index: 80;
   right: 0.75rem;
   bottom: 0.75rem;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.35rem;
   padding: 0.28rem 0.45rem 0.28rem 0.7rem;
@@ -49,6 +49,10 @@
   background-position: calc(100% - 8px) 55%, calc(100% - 4px) 55%;
   background-size: 4px 4px, 4px 4px;
   background-repeat: no-repeat;
+}
+
+html[data-switcher] .template-switch {
+  display: flex;
 }
 
 html[data-template="vcard"] body {

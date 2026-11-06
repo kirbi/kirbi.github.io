@@ -9,15 +9,16 @@ window.PORTFOLIO_TEMPLATES.push({
     var links = profile.links.map(function (link) {
       return '<li><a href="' + esc(link.href) + '" target="_blank" rel="noopener noreferrer">' + esc(link.label) + "</a></li>";
     }).join("");
+    var ui = profile.ui;
     var nav = [
-      ["#about", "About"],
-      ["#experience", "Experience"],
-      ["#projects", "Projects"],
-      ["#skills", "Skills"],
-      ["#education", "Education"],
-      ["#contact", "Contact"]
+      ["#about", ui.about],
+      ["#experience", ui.experience],
+      ["#projects", ui.projects],
+      ["#skills", ui.skills],
+      ["#education", ui.education],
+      ["#contact", ui.contact]
     ].map(function (item) {
-      return '<li><a href="' + item[0] + '">' + item[1] + "</a></li>";
+      return '<li><a href="' + item[0] + '">' + esc(item[1]) + "</a></li>";
     }).join("");
 
     function bullets(items) {
@@ -33,17 +34,17 @@ window.PORTFOLIO_TEMPLATES.push({
           "<p class=\"place\">" + esc(job.place) + "</p></div>" +
           "<div><h3>" + esc(job.company) + "</h3><p class=\"role-title\">" + esc(job.role) + "</p>" +
           bullets(job.bullets) +
-          "<p class=\"tools\"><span>Tools</span> " + esc(job.tools) + "</p></div>" +
+          "<p class=\"tools\"><span>" + esc(ui.tools) + "</span> " + esc(job.tools) + "</p></div>" +
         "</article></li>"
       );
     }).join("");
 
     var projects = profile.projects.map(function (project) {
       var stack = project.stack && project.stack.length
-        ? "<p class=\"tools\"><span>Stack</span> " + esc(project.stack.join(", ")) + "</p>"
+        ? "<p class=\"tools\"><span>" + esc(ui.stack) + "</span> " + esc(project.stack.join(", ")) + "</p>"
         : "";
       var skills = project.skills && project.skills.length
-        ? "<p class=\"tools\"><span>Skills</span> " + esc(project.skills.join(", ")) + "</p>"
+        ? "<p class=\"tools\"><span>" + esc(ui.skillLabel) + "</span> " + esc(project.skills.join(", ")) + "</p>"
         : "";
       var image = project.image
         ? "<img class=\"project-shot\" src=\"" + esc(project.image) + "\" alt=\"\">"
@@ -73,8 +74,14 @@ window.PORTFOLIO_TEMPLATES.push({
         "<div class=\"wrap\">" +
           "<a class=\"brand\" href=\"#top\"><span class=\"brand-mark\" aria-hidden=\"true\">" + esc(profile.initials) + "</span>" +
           "<span class=\"brand-name\">" + esc(profile.shortName) + "</span></a>" +
-          "<button class=\"nav-toggle\" type=\"button\" aria-expanded=\"false\" aria-controls=\"site-nav\">Menu</button>" +
-          "<nav class=\"site-nav\" id=\"site-nav\" aria-label=\"Primary\"><ul>" + nav + "</ul></nav>" +
+          "<div class=\"header-end\">" +
+            "<div class=\"lang-toggle\" role=\"group\" aria-label=\"" + esc(ui.language) + "\">" +
+              "<button type=\"button\" data-lang=\"en\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "false" : "true") + "\">EN</button>" +
+              "<button type=\"button\" data-lang=\"id\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "true" : "false") + "\">ID</button>" +
+            "</div>" +
+            "<button class=\"nav-toggle\" type=\"button\" aria-expanded=\"false\" aria-controls=\"site-nav\" data-menu-label=\"" + esc(ui.menu) + "\" data-close-label=\"" + esc(ui.close) + "\">" + esc(ui.menu) + "</button>" +
+            "<nav class=\"site-nav\" id=\"site-nav\" aria-label=\"" + esc(ui.primaryNav) + "\"><ul>" + nav + "</ul></nav>" +
+          "</div>" +
         "</div></header>" +
       "<main id=\"main\">" +
         "<section class=\"hero wrap\" id=\"top\" aria-labelledby=\"intro-title\">" +
@@ -82,38 +89,40 @@ window.PORTFOLIO_TEMPLATES.push({
           "<h1 id=\"intro-title\">" + esc(profile.headline) + "</h1>" +
           "<p class=\"role-line\">" + esc(profile.roleLine) + "</p>" +
           "<p class=\"lede\">" + esc(profile.lede) + "</p>" +
-          "<ul class=\"hero-links\"><li><a href=\"mailto:" + esc(profile.email) + "\">" + esc(profile.email) + "</a></li>" + links + "</ul>" +
-          "<dl class=\"meta\"><div><dt>Based</dt><dd>" + esc(profile.location) + "</dd></div>" +
-          "<div><dt>Now</dt><dd>" + esc(profile.experience[0].company) + "</dd></div></dl></div>" +
+          "<ul class=\"hero-links\"><li><a href=\"mailto:" + esc(profile.email) + "\">" + esc(profile.email) + "</a></li>" + links +
+          "<li><a class=\"cv-link\" href=\"" + esc(profile.cv) + "\" download>" + esc(ui.downloadCv) + "</a></li></ul>" +
+          "<dl class=\"meta\"><div><dt>" + esc(ui.based) + "</dt><dd>" + esc(profile.location) + "</dd></div>" +
+          "<div><dt>" + esc(ui.now) + "</dt><dd>" + esc(profile.experience[0].company) + "</dd></div></dl></div>" +
           "<figure class=\"hero-photo\"><img src=\"" + esc(profile.photo) + "\" width=\"661\" height=\"699\" alt=\"" + esc(profile.photoAlt) + "\"></figure>" +
         "</section>" +
         "<section class=\"section wrap\" id=\"about\" aria-labelledby=\"about-title\">" +
-          "<div class=\"section-head\"><p class=\"index\">01</p><h2 id=\"about-title\">About</h2></div>" +
+          "<div class=\"section-head\"><p class=\"index\">01</p><h2 id=\"about-title\">" + esc(ui.about) + "</h2></div>" +
           "<div class=\"about\">" + profile.about.map(function (paragraph) {
             return "<p>" + esc(paragraph) + "</p>";
           }).join("") + "</div></section>" +
         "<section class=\"section wrap\" id=\"experience\" aria-labelledby=\"experience-title\">" +
-          "<div class=\"section-head\"><p class=\"index\">02</p><h2 id=\"experience-title\">Experience</h2></div>" +
+          "<div class=\"section-head\"><p class=\"index\">02</p><h2 id=\"experience-title\">" + esc(ui.experience) + "</h2></div>" +
           "<ol class=\"timeline\">" + roles + "</ol></section>" +
         "<section class=\"section wrap\" id=\"projects\" aria-labelledby=\"projects-title\">" +
-          "<div class=\"section-head\"><p class=\"index\">03</p><h2 id=\"projects-title\">Projects</h2></div>" +
+          "<div class=\"section-head\"><p class=\"index\">03</p><h2 id=\"projects-title\">" + esc(ui.projects) + "</h2></div>" +
           "<ol class=\"timeline\">" + projects + "</ol></section>" +
         "<section class=\"section wrap\" id=\"skills\" aria-labelledby=\"skills-title\">" +
-          "<div class=\"section-head\"><p class=\"index\">04</p><h2 id=\"skills-title\">Skills</h2></div>" +
+          "<div class=\"section-head\"><p class=\"index\">04</p><h2 id=\"skills-title\">" + esc(ui.skills) + "</h2></div>" +
           "<dl class=\"skill-grid\">" + skills + "</dl></section>" +
         "<section class=\"section wrap\" id=\"education\" aria-labelledby=\"education-title\">" +
-          "<div class=\"section-head\"><p class=\"index\">05</p><h2 id=\"education-title\">Education and organizations</h2></div>" +
+          "<div class=\"section-head\"><p class=\"index\">05</p><h2 id=\"education-title\">" + esc(ui.educationOrgs) + "</h2></div>" +
           "<div class=\"split\"><div class=\"panel\"><p class=\"status\">" + esc(profile.education.status) + "</p>" +
           "<h3>" + esc(profile.education.degree) + "</h3><p class=\"role-title\">" + esc(profile.education.school) + "</p></div>" +
           "<div class=\"panel\" id=\"organizations\">" + orgs + "</div></div></section>" +
         "<section class=\"contact\" id=\"contact\" aria-labelledby=\"contact-title\"><div class=\"wrap\">" +
-          "<div class=\"section-head\"><p class=\"index\">06</p><h2 id=\"contact-title\">Contact</h2></div>" +
+          "<div class=\"section-head\"><p class=\"index\">06</p><h2 id=\"contact-title\">" + esc(ui.contact) + "</h2></div>" +
           "<div class=\"contact-grid\"><div><p class=\"contact-mail\"><a href=\"mailto:" + esc(profile.email) + "\">" + esc(profile.email) + "</a></p>" +
           "<ul class=\"contact-list\">" +
           profile.links.map(function (link) {
             return "<li><a href=\"" + esc(link.href) + "\" target=\"_blank\" rel=\"noopener noreferrer\">" + esc(link.href.replace(/^https:\/\//, "")) + "</a></li>";
           }).join("") +
-          "</ul></div><div class=\"contact-aside\"><p class=\"index\">Location</p><p>" + esc(profile.location) + "</p></div></div>" +
+          "</ul><p class=\"contact-cv\"><a class=\"cv-link\" href=\"" + esc(profile.cv) + "\" download>" + esc(ui.downloadCv) + "</a></p></div>" +
+          "<div class=\"contact-aside\"><p class=\"index\">" + esc(ui.location) + "</p><p>" + esc(profile.location) + "</p></div></div>" +
           "<footer class=\"site-footer\"><p>" + esc(profile.name) + " · " + esc(profile.title) + " · Bali</p></footer>" +
         "</div></section></main>";
 
@@ -130,7 +139,7 @@ function bindModern(root) {
 
   function setOpen(open) {
     button.setAttribute("aria-expanded", open ? "true" : "false");
-    button.textContent = open ? "Close" : "Menu";
+    button.textContent = open ? button.getAttribute("data-close-label") : button.getAttribute("data-menu-label");
     nav.classList.toggle("is-open", open);
   }
 
@@ -148,7 +157,7 @@ function bindModern(root) {
       var menu = document.querySelector("#site-nav");
       if (!current || !menu || current.getAttribute("aria-expanded") !== "true") return;
       current.setAttribute("aria-expanded", "false");
-      current.textContent = "Menu";
+      current.textContent = current.getAttribute("data-menu-label") || "Menu";
       menu.classList.remove("is-open");
     });
   }

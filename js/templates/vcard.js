@@ -52,11 +52,12 @@ window.PORTFOLIO_TEMPLATES.push({
       return "<section class=\"timeline\"><div class=\"title-wrapper\"><div class=\"icon-box\">" + symbol + "</div><h3 class=\"h3\">" + esc(title) + "</h3></div><ol class=\"timeline-list\">" + rows + "</ol></section>";
     }
 
+    var ui = profile.ui;
     var education = timeline([{
       title: profile.education.degree,
       meta: profile.education.status,
       text: "<p>" + esc(profile.education.school) + "</p>"
-    }], "Education", icons.book);
+    }], ui.education, icons.book);
 
     var jobs = timeline(profile.experience.map(function (job) {
       return {
@@ -64,7 +65,7 @@ window.PORTFOLIO_TEMPLATES.push({
         meta: job.role + " · " + job.start + " — " + job.end,
         text: "<p>" + esc(job.place) + "</p>" + bullets(job.bullets) + "<p class=\"timeline-tools\">" + esc(job.tools) + "</p>"
       };
-    }), "Experience", icons.briefcase);
+    }), ui.experience, icons.briefcase);
 
     var orgs = timeline(profile.organizations.map(function (org) {
       return {
@@ -72,7 +73,7 @@ window.PORTFOLIO_TEMPLATES.push({
         meta: org.when + " · " + org.place,
         text: bullets(org.bullets)
       };
-    }), "Organizations", icons.people);
+    }), ui.orgs, icons.people);
 
     var skillCards = profile.skills.map(function (group) {
       return "<li class=\"service-item\"><div class=\"service-content-box\"><h4 class=\"h4 service-item-title\">" + esc(group.name) + "</h4><p class=\"service-item-text\">" + esc(group.items) + "</p></div></li>";
@@ -83,10 +84,10 @@ window.PORTFOLIO_TEMPLATES.push({
         ? "<img src=\"" + esc(project.image) + "\" alt=\"\">"
         : "<span class=\"project-fallback\" aria-hidden=\"true\">" + esc(project.mark) + "</span>";
       var stack = project.stack && project.stack.length
-        ? "<p class=\"project-meta\"><span>Stack</span> " + esc(project.stack.join(", ")) + "</p>"
+        ? "<p class=\"project-meta\"><span>" + esc(ui.stack) + "</span> " + esc(project.stack.join(", ")) + "</p>"
         : "";
       var skills = project.skills && project.skills.length
-        ? "<p class=\"project-meta\"><span>Skills</span> " + esc(project.skills.join(", ")) + "</p>"
+        ? "<p class=\"project-meta\"><span>" + esc(ui.skillLabel) + "</span> " + esc(project.skills.join(", ")) + "</p>"
         : "";
       return "<li class=\"project-item\"><article><div class=\"project-img\">" + cover + "</div><h3 class=\"h3 project-title\">" + esc(project.name) + "</h3><p class=\"project-category\">" + esc(project.start) + " — " + esc(project.end) + "</p><p class=\"project-text\">" + esc(project.summary) + "</p>" + stack + skills + "</article></li>";
     }).join("");
@@ -114,39 +115,44 @@ window.PORTFOLIO_TEMPLATES.push({
         "<aside class=\"sidebar\" data-sidebar>" +
           "<div class=\"sidebar-info\">" +
             "<figure class=\"avatar-box\"><img src=\"" + esc(profile.photo) + "\" width=\"150\" height=\"150\" alt=\"" + esc(profile.photoAlt) + "\"></figure>" +
-            "<div class=\"info-content\"><h1 class=\"name\" title=\"" + esc(profile.name) + "\">" + esc(profile.shortName) + "</h1><p class=\"title\">" + esc(profile.title) + "</p></div>" +
-            "<button class=\"info_more-btn\" type=\"button\" data-sidebar-btn aria-expanded=\"false\" aria-controls=\"sidebar-more\"><span>Show contacts</span>" + icons.chevron + "</button>" +
+            "<div class=\"info-content\"><h1 class=\"name\" title=\"" + esc(profile.name) + "\">" + esc(profile.shortName) + "</h1><p class=\"title\">" + esc(profile.title) + "</p>" +
+            "<div class=\"lang-toggle\" role=\"group\" aria-label=\"" + esc(ui.language) + "\">" +
+              "<button type=\"button\" data-lang=\"en\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "false" : "true") + "\">EN</button>" +
+              "<button type=\"button\" data-lang=\"id\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "true" : "false") + "\">ID</button>" +
+            "</div>" +
+            "<a class=\"cv-btn\" href=\"" + esc(profile.cv) + "\" download>" + esc(ui.downloadCv) + "</a></div>" +
+            "<button class=\"info_more-btn\" type=\"button\" data-sidebar-btn aria-expanded=\"false\" aria-controls=\"sidebar-more\" data-show-label=\"" + esc(ui.showContacts) + "\" data-hide-label=\"" + esc(ui.hideContacts) + "\"><span>" + esc(ui.showContacts) + "</span>" + icons.chevron + "</button>" +
           "</div>" +
           "<div class=\"sidebar-info_more\" id=\"sidebar-more\">" +
             "<div class=\"separator\"></div>" +
             "<ul class=\"contacts-list\">" +
-              contactRow(icons.mail, "Email", emailLink(profile.email)) +
-              contactRow(icons.pin, "Location", "<address>" + esc(profile.location) + "</address>") +
+              contactRow(icons.mail, ui.email, emailLink(profile.email)) +
+              contactRow(icons.pin, ui.location, "<address>" + esc(profile.location) + "</address>") +
             "</ul>" +
             "<div class=\"separator\"></div>" +
             "<ul class=\"social-list\">" + socials + "</ul>" +
           "</div>" +
         "</aside>" +
         "<div class=\"main-content\">" +
-          "<nav class=\"navbar\" aria-label=\"Sections\"><ul class=\"navbar-list\" role=\"tablist\">" +
-            tab("about", "About") + tab("resume", "Resume") + tab("portfolio", "Portfolio") + tab("contact", "Contact") +
+          "<nav class=\"navbar\" aria-label=\"" + esc(ui.sections) + "\"><ul class=\"navbar-list\" role=\"tablist\">" +
+            tab("about", esc(ui.about)) + tab("resume", esc(ui.resume)) + tab("portfolio", esc(ui.portfolio)) + tab("contact", esc(ui.contact)) +
           "</ul></nav>" +
-          panel("about", "About me",
+          panel("about", esc(ui.aboutMe),
             "<section class=\"about-text\">" + profile.about.map(function (paragraph) {
               return "<p>" + esc(paragraph) + "</p>";
             }).join("") + "</section>" +
-            "<section class=\"service\"><h3 class=\"h3 service-title\">What I'm doing</h3><ul class=\"service-list\">" + highlights + "</ul></section>") +
-          panel("resume", "Resume", education + jobs + orgs +
-            "<section class=\"service\"><h3 class=\"h3 service-title\">Skills</h3><ul class=\"service-list\">" + skillCards + "</ul></section>") +
-          panel("portfolio", "Portfolio", "<section class=\"projects\"><ul class=\"project-list\">" + projects + "</ul></section>") +
-          panel("contact", "Contact",
-            "<section class=\"contact-panel\"><p class=\"about-text\">Email is the direct way to reach me. The button opens your mail app.</p>" +
-            "<a class=\"form-btn\" href=\"mailto:" + esc(profile.email) + "\">" + icons.mail + "<span>Email " + esc(profile.name) + "</span></a>" +
+            "<section class=\"service\"><h3 class=\"h3 service-title\">" + esc(ui.doing) + "</h3><ul class=\"service-list\">" + highlights + "</ul></section>") +
+          panel("resume", esc(ui.resume), education + jobs + orgs +
+            "<section class=\"service\"><h3 class=\"h3 service-title\">" + esc(ui.skills) + "</h3><ul class=\"service-list\">" + skillCards + "</ul></section>") +
+          panel("portfolio", esc(ui.portfolio), "<section class=\"projects\"><ul class=\"project-list\">" + projects + "</ul></section>") +
+          panel("contact", esc(ui.contact),
+            "<section class=\"contact-panel\"><p class=\"about-text\">" + esc(ui.emailLead) + "</p>" +
+            "<a class=\"form-btn\" href=\"mailto:" + esc(profile.email) + "\">" + icons.mail + "<span>" + esc(ui.emailCta) + "</span></a>" +
             "<ul class=\"contacts-list contact-panel-list\">" +
-              contactRow(icons.mail, "Email", emailLink(profile.email)) +
-              contactRow(icons.pin, "Location", "<address>" + esc(profile.location) + "</address>") +
+              contactRow(icons.mail, ui.email, emailLink(profile.email)) +
+              contactRow(icons.pin, ui.location, "<address>" + esc(profile.location) + "</address>") +
             "</ul></section>") +
-          "<p class=\"layout-credit\">vCard layout adapted from <a href=\"https://github.com/codewithsadee/vcard-personal-portfolio\" target=\"_blank\" rel=\"noopener noreferrer\">vCard Personal Portfolio</a> by codewithsadee, MIT License.</p>" +
+          "<p class=\"layout-credit\">" + esc(ui.creditBefore) + "<a href=\"https://github.com/codewithsadee/vcard-personal-portfolio\" target=\"_blank\" rel=\"noopener noreferrer\">vCard Personal Portfolio</a>" + esc(ui.creditAfter) + "</p>" +
         "</div></main>";
 
     bindVcard(mount);
@@ -160,7 +166,7 @@ function bindVcard(root) {
     more.addEventListener("click", function () {
       var open = sidebar.classList.toggle("active");
       more.setAttribute("aria-expanded", open ? "true" : "false");
-      more.querySelector("span").textContent = open ? "Hide contacts" : "Show contacts";
+      more.querySelector("span").textContent = open ? more.getAttribute("data-hide-label") : more.getAttribute("data-show-label");
     });
   }
 

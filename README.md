@@ -4,7 +4,7 @@ Static GitHub Pages site. There is no build step. `index.html` loads the scripts
 
 ## Content
 
-Edit `data/profile.js`. Both templates read that file, including experience, skills, education, and `projects`.
+Edit `data/profile.js`. Both templates read that file. English copy is `PROFILE_LOCALES.en` and Indonesian copy is `PROFILE_LOCALES.id`. Shared facts (name, email, photo, links, CV path) sit at the top of the file.
 
 ## Templates
 
@@ -13,7 +13,7 @@ The page has two layouts:
 - `modern` — the editorial page
 - `vcard` — a dark sidebar layout adapted from [vCard Personal Portfolio](https://github.com/codewithsadee/vcard-personal-portfolio) by codewithsadee (MIT). The license notice is in `licenses/vcard-personal-portfolio-MIT.txt`.
 
-Switch layouts with the Template control, or open `?template=modern` or `?template=vcard`. A choice in the control, and a valid `template` query, is stored in `localStorage` under `portfolio-template`. The default for a first visit is the one line in `data/config.js`:
+The Template control is hidden on a normal visit. It appears when the URL has a valid `?template=modern` or `?template=vcard`, and it stays available after that choice is stored in `localStorage` under `portfolio-template`. The default for a first visit is the one line in `data/config.js`:
 
 ```js
 defaultTemplate: "modern",
@@ -49,6 +49,12 @@ stylesheets: {
 3. Add `<script src="js/templates/your-id.js"></script>` in `index.html` before `js/app.js`.
 
 The Template menu lists every registered template. Keep new copy in `data/profile.js` instead of inside the renderer.
+
+## Language
+
+The page opens in English. `?lang=id` or `?lang=en` selects a language, and a valid choice is stored under `portfolio-lang`. The EN / ID control in each template does the same. UI labels and the profile copy both come from `data/profile.js`.
+
+The downloadable CV is `assets/Kirbi-Simbolon-CV.pdf` (email, GitHub, and LinkedIn only).
 
 ## Preview
 
