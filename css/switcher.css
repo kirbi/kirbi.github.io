@@ -1,0 +1,100 @@
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: 0.6rem;
+  z-index: 90;
+  transform: translateY(-140%);
+  background: #1c1915;
+  color: #f7f3ec;
+  padding: 0.45rem 0.75rem;
+  text-decoration: none;
+}
+
+.skip:focus {
+  transform: none;
+}
+
+.template-switch {
+  position: fixed;
+  z-index: 80;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.45rem 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: #1c1915;
+  color: #f7f3ec;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  font-family: Outfit, Poppins, sans-serif;
+}
+
+.template-switch label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.template-switch select {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #f7f3ec;
+  font: 600 0.82rem/1 Outfit, Poppins, sans-serif;
+  padding: 0.35rem 1.1rem 0.35rem 0.15rem;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, #f7f3ec 50%), linear-gradient(135deg, #f7f3ec 50%, transparent 50%);
+  background-position: calc(100% - 8px) 55%, calc(100% - 4px) 55%;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+html[data-template="vcard"] body {
+  background: hsl(0, 0%, 7%);
+}
+
+@media (max-width: 1023px) {
+  html[data-template="vcard"] .template-switch {
+    bottom: 4.6rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .template-switch label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .template-switch {
+    padding: 0.12rem 0.35rem 0.12rem 0.65rem;
+  }
+}
+
+html[data-template="modern"] :focus-visible {
+  outline: 2px solid #16382c;
+  outline-offset: 3px;
+}
+
+html[data-template="vcard"] :focus-visible {
+  outline: 2px solid hsl(45, 100%, 72%);
+  outline-offset: 3px;
+}
+
+.noscript {
+  max-width: 40rem;
+  margin: 2rem auto;
+  font-family: Outfit, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

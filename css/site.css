@@ -135,7 +135,9 @@ a:hover {
 
 .site-nav ul {
   display: flex;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem 0.95rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -351,6 +353,26 @@ h2 {
 .tools span {
   display: inline-block;
   margin-right: 0.55rem;
+}
+
+.project-mark {
+  margin: 0.85rem 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  color: var(--pine);
+}
+
+.project-summary {
+  margin: 0;
+  color: var(--muted);
+}
+
+.project-shot {
+  width: 8.5rem;
+  margin-top: 0.85rem;
+  border-radius: 0.7rem;
 }
 
 .skill-grid {

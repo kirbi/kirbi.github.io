@@ -9,256 +9,38 @@
     <link rel="icon" href="img/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,520;0,9..144,640;1,9..144,520&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/site.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,520;0,9..144,640;1,9..144,520&family=Outfit:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/switcher.css">
+    <link id="template-css" rel="stylesheet" href="css/site.css">
+    <script src="js/choose-template.js"></script>
+    <script src="data/config.js"></script>
+    <script>
+      (function () {
+        var cfg = window.PORTFOLIO || {};
+        var ids = Object.keys(cfg.stylesheets || {});
+        var query = new URLSearchParams(location.search).get("template");
+        var stored = null;
+        try { stored = localStorage.getItem("portfolio-template"); } catch (error) {}
+        var id = window.chooseTemplate(ids, query, stored, cfg.defaultTemplate);
+        document.documentElement.dataset.template = id || "modern";
+        var link = document.getElementById("template-css");
+        if (id && cfg.stylesheets && cfg.stylesheets[id]) link.href = cfg.stylesheets[id];
+      })();
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <header class="site-header">
-      <div class="wrap">
-        <a class="brand" href="#top">
-          <span class="brand-mark" aria-hidden="true">KS</span>
-          <span class="brand-name">Kirbi Simbolon</span>
-        </a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-        <nav class="site-nav" id="site-nav" aria-label="Primary">
-          <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <main id="main">
-      <section class="hero wrap" id="top" aria-labelledby="intro-title">
-        <div>
-          <p class="eyebrow">Y. R. Kirbi Simbolon</p>
-          <h1 id="intro-title">PHP developer in Bali.</h1>
-          <p class="role-line">Laravel, Livewire, and the systems behind orders, stock, and payments.</p>
-          <p class="lede">I build and maintain business software in PHP. Recent work is a Laravel ERP for catalog, inventory, orders, and shipments. Earlier roles covered academic systems, a freelance sales API, and a Vue.js storefront.</p>
-          <ul class="hero-links">
-            <li><a href="mailto:kirbi.simbolon@gmail.com">kirbi.simbolon@gmail.com</a></li>
-            <li><a href="https://github.com/kirbi" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            <li><a href="https://linkedin.com/in/kirbi-simbolon" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          </ul>
-          <dl class="meta">
-            <div>
-              <dt>Based</dt>
-              <dd>Bali, Indonesia</dd>
-            </div>
-            <div>
-              <dt>Phone</dt>
-              <dd><a href="tel:+6282325283895">+62 823 2528 3895</a></dd>
-            </div>
-            <div>
-              <dt>Now</dt>
-              <dd>PT. Bonofactum</dd>
-            </div>
-          </dl>
-        </div>
-        <figure class="hero-photo">
-          <img src="img/personal.jpg" width="661" height="699" alt="Kirbi Simbolon, photographed outdoors">
-        </figure>
-      </section>
-
-      <section class="section wrap" id="about" aria-labelledby="about-title">
-        <div class="section-head">
-          <p class="index">01</p>
-          <h2 id="about-title">About</h2>
-        </div>
-        <div class="about">
-          <p>At PT. Bonofactum I work on Manobo, the company’s Laravel and Livewire ERP. I add product, stock, order, inventory, and shipment features, including warehouse screens and item classification. The same codebase publishes product and inventory events through a message-broker outbox, recalculates catalog cost, and runs scheduled KPI and reporting jobs. I refactor the older PHP and cover the behavior with PHPUnit.</p>
-          <p>Before Bali I was a software engineer at IT Del, where I connected academic systems to Feeder DIKTI, SPADA, BNI, and Mandiri. At Insight I designed the database and REST API for a noodle-sales system and integrated DANA. At Royale Utama Makmur I built a responsive Vue.js storefront. I also mentor junior developers. I am fluent in Indonesian and intermediate in English.</p>
-        </div>
-      </section>
-
-      <section class="section wrap" id="experience" aria-labelledby="experience-title">
-        <div class="section-head">
-          <p class="index">02</p>
-          <h2 id="experience-title">Experience</h2>
-        </div>
-        <ol class="timeline">
-          <li>
-            <article class="role">
-              <div>
-                <p class="when"><time datetime="2022-08">Aug 2022</time><span>– Present</span></p>
-                <p class="place">Bali, Indonesia</p>
-              </div>
-              <div>
-                <h3>PT. Bonofactum</h3>
-                <p class="role-title">PHP Developer</p>
-                <ul>
-                  <li>I add Laravel and Livewire features for products, stock, orders, inventory, and shipments, including warehouse screens, item classification, and purchase-order pick lists.</li>
-                  <li>I record product and inventory changes in a message-broker outbox and publish them with scheduled Pub/Sub jobs.</li>
-                  <li>I maintain COGS settings and history, article-level COGS on product analysis exports, and the catalog cost that recalculation stores on each product.</li>
-                  <li>I support EDI order and despatch-advice messages, and ChannelAdvisor product, stock, and order exchange.</li>
-                  <li>I build scheduled reports and KPI jobs, including daily production closing, and cover them with PHPUnit.</li>
-                  <li>I refactor legacy PHP for readability, maintainability, and performance, streamline MySQL access, and mentor junior developers.</li>
-                </ul>
-                <p class="tools"><span>Tools</span> PHP, MySQL, JavaScript, jQuery, Bootstrap, Laravel, Livewire, Docker with WSL 2, Linux server</p>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="role">
-              <div>
-                <p class="when"><time datetime="2020-05">May 2020</time><span>– July 2022</span></p>
-                <p class="place">Laguboti, Indonesia</p>
-              </div>
-              <div>
-                <h3>IT Del</h3>
-                <p class="role-title">Software Engineer</p>
-                <ul>
-                  <li>I added features the academic community uses: an academic calendar, bursar payments, automated task checking, task reminders, and reports in charts and documents.</li>
-                  <li>I integrated the system with Feeder DIKTI and SPADA, and with the BNI and Mandiri banking systems.</li>
-                  <li>I designed databases, managed cPanel hosting, and maintained other departments’ sites on Laravel, Yii2, Yii1, WordPress, and related stacks.</li>
-                </ul>
-                <p class="tools"><span>Tools</span> Yii2, MySQL, REST API, Linux server, Moodle, CWP web panel, PHP, GitLab</p>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="role">
-              <div>
-                <p class="when"><time datetime="2020-01">Jan 2020</time><span>– Mar 2021</span></p>
-                <p class="place">Medan, Indonesia</p>
-              </div>
-              <div>
-                <h3>Insight</h3>
-                <p class="role-title">Back-end Developer · Freelance</p>
-                <ul>
-                  <li>I built the backend and REST API for a system that sells noodles.</li>
-                  <li>I designed the database and the business processes around it.</li>
-                  <li>I integrated the DANA payment system and customer payment tracking.</li>
-                  <li>I trained internship students.</li>
-                </ul>
-                <p class="tools"><span>Tools</span> Laravel, MySQL, REST API, DANA payment API, GitLab</p>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="role">
-              <div>
-                <p class="when"><time datetime="2018-08">Aug 2018</time><span>– Dec 2019</span></p>
-                <p class="place">Medan, Indonesia</p>
-              </div>
-              <div>
-                <h3>Royale Utama Makmur</h3>
-                <p class="role-title">Front End Developer</p>
-                <ul>
-                  <li>I built the Vue.js front end for an ecommerce site so the interface stays usable from phones through desktops, on macOS and Windows browsers.</li>
-                  <li>I tested the web application with LambdaTest.</li>
-                </ul>
-                <p class="tools"><span>Tools</span> Vue.js, Laravel, Raja Ongkir API, PostgreSQL, REST API, LambdaTest, GitHub</p>
-              </div>
-            </article>
-          </li>
-        </ol>
-      </section>
-
-      <section class="section wrap" id="skills" aria-labelledby="skills-title">
-        <div class="section-head">
-          <p class="index">03</p>
-          <h2 id="skills-title">Skills</h2>
-        </div>
-        <dl class="skill-grid">
-          <div>
-            <dt>Languages</dt>
-            <dd>Indonesian, fluent. English, intermediate.</dd>
-          </div>
-          <div>
-            <dt>Programming</dt>
-            <dd>PHP, JavaScript</dd>
-          </div>
-          <div>
-            <dt>Frameworks</dt>
-            <dd>Laravel, Yii2, Livewire, Bootstrap, Vue.js</dd>
-          </div>
-          <div>
-            <dt>Databases</dt>
-            <dd>MySQL, PostgreSQL</dd>
-          </div>
-          <div>
-            <dt>Backend &amp; API</dt>
-            <dd>RESTful API, authentication, payment gateway integration (DANA, BNI)</dd>
-          </div>
-          <div>
-            <dt>Tools</dt>
-            <dd>Git, GitLab, Docker, WSL 2, cPanel, Linux server, Moodle, CWP web panel</dd>
-          </div>
-          <div>
-            <dt>Concepts</dt>
-            <dd>MVC, microservices, unit testing</dd>
-          </div>
-        </dl>
-      </section>
-
-      <section class="section wrap" id="education" aria-labelledby="education-title">
-        <div class="section-head">
-          <p class="index">04</p>
-          <h2 id="education-title">Education and organizations</h2>
-        </div>
-        <div class="split">
-          <div class="panel">
-            <p class="status">In progress · May 2028</p>
-            <h3>Bachelor of Computer Science</h3>
-            <p class="role-title">Diponegoro University · Semarang, Indonesia</p>
-          </div>
-          <div class="panel" id="organizations">
-            <article>
-              <p class="when">2014–2015</p>
-              <h3>Public Relations, PMK</h3>
-              <p class="org-role">University of Diponegoro</p>
-              <ul>
-                <li>I supported communication and promotional initiatives.</li>
-                <li>I helped organize student events and community activities.</li>
-                <li>I helped maintain relationships with students, alumni, and external partners.</li>
-              </ul>
-            </article>
-            <article>
-              <p class="when">2011–2012</p>
-              <h3>Vice President</h3>
-              <p class="org-role">Middle School Student Council</p>
-              <ul>
-                <li>I assisted the president in leading the student council and coordinating activities.</li>
-                <li>I organized school events and student programs.</li>
-                <li>I represented students in meetings with teachers and the school administration.</li>
-                <li>I coordinated committee members so events ran as planned.</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-      <section class="contact" id="contact" aria-labelledby="contact-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="index">05</p>
-          <h2 id="contact-title">Contact</h2>
-        </div>
-        <div class="contact-grid">
-          <div>
-            <p class="contact-mail"><a href="mailto:kirbi.simbolon@gmail.com">kirbi.simbolon@gmail.com</a></p>
-            <ul class="contact-list">
-              <li><a href="tel:+6282325283895">+62 823 2528 3895</a></li>
-              <li><a href="https://linkedin.com/in/kirbi-simbolon" target="_blank" rel="noopener noreferrer">linkedin.com/in/kirbi-simbolon</a></li>
-              <li><a href="https://github.com/kirbi" target="_blank" rel="noopener noreferrer">github.com/kirbi</a></li>
-            </ul>
-          </div>
-          <div class="contact-aside">
-            <p class="index">Location</p>
-            <p>Bali, Indonesia</p>
-          </div>
-        </div>
-        <footer class="site-footer">
-          <p>Y. R. Kirbi Simbolon · PHP Developer · Bali</p>
-        </footer>
-      </div>
-    </section>
-    </main>
-    <script src="js/site.js"></script>
+    <div class="template-switch">
+      <label for="template-select">Template</label>
+      <select id="template-select"></select>
+    </div>
+    <div id="app"></div>
+    <noscript>
+      <p class="noscript">This page builds both layouts from <code>data/profile.js</code> and needs JavaScript to show them.</p>
+    </noscript>
+    <script src="data/profile.js"></script>
+    <script src="js/templates/modern.js"></script>
+    <script src="js/templates/vcard.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
