@@ -13,7 +13,7 @@ The page has two layouts:
 - `modern` — the editorial page
 - `vcard` — a dark sidebar layout adapted from [vCard Personal Portfolio](https://github.com/codewithsadee/vcard-personal-portfolio) by codewithsadee (MIT). The license notice is in `licenses/vcard-personal-portfolio-MIT.txt`.
 
-The Template control is hidden on a normal visit. It appears when the URL has a valid `?template=modern` or `?template=vcard`, and it stays available after that choice is stored in `localStorage` under `portfolio-template`. While it is open it also links to the shortcut pages below. The default for a first visit to the site root is the one line in `data/config.js`:
+Each layout has a theme button in the header (Modern) or sidebar (vCard). One click opens the other layout, keeps the current `lang` query, and stores the choice in `localStorage` under `portfolio-template`. The default for a first visit to the site root is the one line in `data/config.js`:
 
 ```js
 defaultTemplate: "modern",
@@ -48,7 +48,7 @@ stylesheets: {
 
 3. Add `<script src="js/templates/your-id.js"></script>` in `index.html` before `js/app.js`.
 
-The Template menu lists every registered template. Keep new copy in `data/profile.js` instead of inside the renderer.
+Keep new copy in `data/profile.js` instead of inside the renderer. The theme button switches between the Modern and vCard pages.
 
 ## Shortcut URLs
 

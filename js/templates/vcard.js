@@ -120,6 +120,7 @@ window.PORTFOLIO_TEMPLATES.push({
               "<button type=\"button\" data-lang=\"en\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "false" : "true") + "\">EN</button>" +
               "<button type=\"button\" data-lang=\"id\" aria-pressed=\"" + (document.documentElement.lang === "id" ? "true" : "false") + "\">ID</button>" +
             "</div>" +
+            "<button class=\"theme-switch\" type=\"button\" data-theme-switch=\"modern\">" + esc(ui.switchToModern) + "</button>" +
             "<a class=\"cv-btn\" href=\"" + esc(profile.cv) + "\" download>" + esc(ui.downloadCv) + "</a></div>" +
             "<button class=\"info_more-btn\" type=\"button\" data-sidebar-btn aria-expanded=\"false\" aria-controls=\"sidebar-more\" data-show-label=\"" + esc(ui.showContacts) + "\" data-hide-label=\"" + esc(ui.hideContacts) + "\"><span>" + esc(ui.showContacts) + "</span>" + icons.chevron + "</button>" +
           "</div>" +

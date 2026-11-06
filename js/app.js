@@ -23,17 +23,9 @@
   var templates = window.PORTFOLIO_TEMPLATES || [];
   var ids = templates.map(function (template) { return template.id; });
   var cfg = window.PORTFOLIO || {};
-  var select = document.getElementById("template-select");
   var mount = document.getElementById("app");
   var params = new URLSearchParams(location.search);
   var currentId = "modern";
-
-  templates.forEach(function (template) {
-    var option = document.createElement("option");
-    option.value = template.id;
-    option.textContent = template.label;
-    select.appendChild(option);
-  });
 
   function pageFor(templateId) {
     if (templateId !== "vcard") return "about";
@@ -55,13 +47,10 @@
       url.searchParams.set("lang", lang);
       history.replaceState(null, "", url);
     }
-    paintShortcuts();
     var desc = document.querySelector("meta[name='description']");
     if (desc && window.PROFILE.description) desc.setAttribute("content", window.PROFILE.description);
     var skip = document.querySelector(".skip");
     if (skip && window.PROFILE.ui) skip.textContent = window.PROFILE.ui.skip;
-    var label = document.querySelector("label[for='template-select']");
-    if (label && window.PROFILE.ui) label.textContent = window.PROFILE.ui.template;
     document.title = window.PROFILE.name + " · " + window.PROFILE.title;
   }
 
@@ -81,7 +70,6 @@
     if (link && href) link.setAttribute("href", href);
     var theme = document.querySelector("meta[name='theme-color']");
     if (theme && template.themeColor) theme.setAttribute("content", template.themeColor);
-    if (select.value !== id) select.value = id;
     document.title = window.PROFILE.name + " · " + window.PROFILE.title;
 
     if (options.persist) writeStorage(TEMPLATE_KEY, id);
@@ -89,9 +77,6 @@
       var url = new URL(location.href);
       url.searchParams.set("template", id);
       history.replaceState(null, "", url);
-    }
-    if (window.switcherVisible(ids, new URLSearchParams(location.search).get("template"), readStorage(TEMPLATE_KEY))) {
-      document.documentElement.setAttribute("data-switcher", "");
     }
 
     mount.replaceChildren();
@@ -106,36 +91,25 @@
     }
   }
 
-  function paintShortcuts() {
+  function themeUrl(id) {
     var lang = new URLSearchParams(location.search).get("lang");
     var suffix = lang === "en" || lang === "id" ? "?lang=" + encodeURIComponent(lang) : "";
-    var path = location.pathname.replace(/\/index\.html$/, "");
-    if (path.charAt(path.length - 1) !== "/") path += "/";
-    ids.forEach(function (id) {
-      var link = document.getElementById("shortcut-" + id);
-      if (!link) return;
-      link.setAttribute("href", "/" + id + "/" + suffix);
-      if (path === "/" + id + "/") link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
-    });
+    return "/" + id + "/" + suffix + location.hash;
   }
 
   document.addEventListener("click", function (event) {
-    var button = event.target.closest("[data-lang]");
-    if (!button || button.getAttribute("aria-pressed") === "true") return;
-    applyLang(button.getAttribute("data-lang"), { persist: true, updateUrl: true });
-    activate(currentId, {});
-  });
-
-  select.addEventListener("change", function () {
-    var shortcut = document.documentElement.getAttribute("data-shortcut");
-    if (shortcut && ids.indexOf(shortcut) !== -1) {
-      writeStorage(TEMPLATE_KEY, select.value);
-      var lang = new URLSearchParams(location.search).get("lang");
-      location.assign("/" + select.value + "/" + (lang === "en" || lang === "id" ? "?lang=" + encodeURIComponent(lang) : ""));
+    var langButton = event.target.closest("[data-lang]");
+    if (langButton && langButton.getAttribute("aria-pressed") !== "true") {
+      applyLang(langButton.getAttribute("data-lang"), { persist: true, updateUrl: true });
+      activate(currentId, {});
       return;
     }
-    activate(select.value, { persist: true, updateUrl: true });
+    var themeButton = event.target.closest("[data-theme-switch]");
+    if (!themeButton) return;
+    var next = themeButton.getAttribute("data-theme-switch");
+    if (ids.indexOf(next) === -1 || next === currentId) return;
+    writeStorage(TEMPLATE_KEY, next);
+    location.assign(themeUrl(next));
   });
 
   var langQuery = params.get("lang");

@@ -176,6 +176,8 @@
       ui: {
         skip: "Skip to content",
         template: "Template",
+        switchToVcard: "Switch to vCard",
+        switchToModern: "Switch to Modern",
         language: "Language",
         menu: "Menu",
         close: "Close",
@@ -362,6 +364,8 @@
       ui: {
         skip: "Lewati ke isi",
         template: "Templat",
+        switchToVcard: "Beralih ke vCard",
+        switchToModern: "Beralih ke Modern",
         language: "Bahasa",
         menu: "Menu",
         close: "Tutup",
